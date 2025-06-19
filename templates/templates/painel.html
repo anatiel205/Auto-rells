@@ -1,21 +1,38 @@
 <!DOCTYPE html>
-<html>
-<head><title>Painel de Usuários</title></head>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel de Usuários</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; background: white; }
+    th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+    th { background: #4CAF50; color: white; }
+    a.botao { padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 4px; }
+  </style>
+</head>
 <body>
-    <h2>Usuários cadastrados</h2>
-    <ul>
-        {% for usuario in usuarios %}
-            <li><b>{{ usuario[1] }}</b> - Token: {{ usuario[2] }}</li>
-        {% endfor %}
-    </ul>
-    <h3>Criar novo usuário</h3>
-    <form method="POST" action="/criar_usuario">
-        Nome: <input name="nome"><br>
-        Token: <input name="token"><br>
-        Legenda: <input name="legenda"><br>
-        Termo de busca: <input name="termo"><br>
-        Intervalo (min): <input name="intervalo" type="number"><br>
-        <button type="submit">Cadastrar</button>
-    </form>
+  <h1>📋 Painel de Usuários</h1>
+
+  <a href="/adicionar" class="botao">➕ Adicionar Novo Usuário</a>
+
+  <table>
+    <tr>
+      <th>Nome</th>
+      <th>Token</th>
+      <th>Legenda</th>
+      <th>Termo</th>
+      <th>Intervalo</th>
+    </tr>
+    {% for u in usuarios %}
+    <tr>
+      <td>{{ u[1] }}</td>
+      <td>{{ u[2] }}</td>
+      <td>{{ u[3] }}</td>
+      <td>{{ u[4] }}</td>
+      <td>{{ u[5] }} min</td>
+    </tr>
+    {% endfor %}
+  </table>
 </body>
 </html>
