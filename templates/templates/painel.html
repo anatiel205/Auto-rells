@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>Painel de Usuários</title></head>
+<body>
+    <h2>Usuários cadastrados</h2>
+    <ul>
+        {% for usuario in usuarios %}
+            <li><b>{{ usuario[1] }}</b> - Token: {{ usuario[2] }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Criar novo usuário</h3>
+    <form method="POST" action="/criar_usuario">
+        Nome: <input name="nome"><br>
+        Token: <input name="token"><br>
+        Legenda: <input name="legenda"><br>
+        Termo de busca: <input name="termo"><br>
+        Intervalo (min): <input name="intervalo" type="number"><br>
+        <button type="submit">Cadastrar</button>
+    </form>
+</body>
+</html>
