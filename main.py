@@ -1,26 +1,24 @@
-from flask import Flask, render_template, request, redirect, url_for
-from Crud import criar_usuario, listar_usuarios
+from flask import Flask, render_template, request
+from Crud import criar_tabela, salvar_usuario, buscar_usuario
 
 app = Flask(__name__)
+criar_tabela()  # Garante que a tabela existe
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+@app.route("/", methods=["GET"])
+def index():
+    return render_template("index.html")
 
-@app.route('/painel')
+@app.route("/painel", methods=["POST"])
 def painel():
-    usuarios = listar_usuarios()
-    return render_template('painel.html', usuarios=usuarios)
+    token = request.form.get("token")
+    legenda = request.form.get("legenda")
+    tempo = int(request.form.get("tempo"))
+    termo = request.form.get("termo")
 
-@app.route('/criar_usuario', methods=['POST'])
-def criar():
-    nome = request.form['nome']
-    token = request.form['token']
-    legenda = request.form['legenda']
-    termo = request.form['termo']
-    intervalo = request.form['intervalo']
-    criar_usuario(nome, token, legenda, termo, intervalo)
-    return redirect(url_for('painel'))
+    salvar_usuario(token, legenda, tempo, termo)
+    user = buscar_usuario(token)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    return render_template("painel.html", usuario=user)
+
+if __name__ == "__main__":
+    app.run(debug=True)
